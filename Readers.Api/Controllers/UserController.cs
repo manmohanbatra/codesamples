@@ -16,8 +16,8 @@ namespace ReadersApi.Controllers
         }
 
         [HttpGet]
-        [Route("allreaders")]
-        public IEnumerable<User> GetReaders()
+        [Route("allusers")]
+        public IEnumerable<User> GetUsers()
         {
             return repo.UserRepo.Find(x => x.Id != 0);
         }
