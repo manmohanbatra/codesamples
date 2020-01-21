@@ -5,3 +5,6 @@ Readers.Tests/bin
 Readers.Tests/obj
 .vs/
 .vscode/
+Readers.Tests/TestResults
+bin/
+obj/

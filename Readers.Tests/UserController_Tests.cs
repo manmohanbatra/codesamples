@@ -1,4 +1,5 @@
 using Moq;
+using ReadersApi.Controllers;
 using ReadersApi.Providers;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,6 @@ namespace Readers.Tests
 {
     public class UserController_Tests
     {
-        IUserRepo repo;
         IUnitOfWork unitOfWork;
 
         public UserController_Tests()
@@ -18,7 +18,7 @@ namespace Readers.Tests
             //Arrange
             var repomoq = new Mock<IUserRepo>();
             repomoq.Setup(x => x.Find(It.IsAny<Expression<Func<User, bool>>>())).Returns(new List<User>() { new User() });
-            repo = repomoq.Object;
+            var repo = repomoq.Object;
 
             var uowmoq = new Mock<IUnitOfWork>();
             uowmoq.Setup(x => x.UserRepo).Returns(repo);
@@ -28,8 +28,11 @@ namespace Readers.Tests
         [Fact]
         public void GetUsers_Success()
         {
+            //Arrange
+            var userController = new UserController(unitOfWork);
+
             //Act
-            var users = unitOfWork.UserRepo.Find(x => x.Id == 1).ToList();
+            var users = userController.GetUsers().ToList();
 
             //Assert
             Assert.True(users.Count > 0);
